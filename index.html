@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planes de Clases - Carlos Sequeira 2026</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --secondary: #2563eb;
+            --accent: #f59e0b;
+            --bg: #f8fafc;
+            --text: #1e293b;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        header p {
+            margin: 5px 0 0;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 15px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        /* Pantalla de Acceso */
+        #login-screen h2 {
+            color: var(--primary);
+            font-size: 1.2rem;
+            margin-top: 0;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background-color: #1d4ed8;
+        }
+        .error-msg {
+            color: #dc2626;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+        }
+        /* Panel Principal */
+        #app-screen {
+            display: none;
+        }
+        .plan-output {
+            background: #f1f5f9;
+            border-left: 5px solid var(--secondary);
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Planes de Clases - Carlos Sequeira 2026</h1>
+        <p>Sistema Oficial de Gestión Pedagógica MINED</p>
+    </header>
+
+    <div class="container">
+        <!-- SECCIÓN DE ACCESO -->
+        <div id="login-screen" class="card">
+            <h2>🔑 Acceso de Docentes</h2>
+            <p style="font-size: 0.9rem; color: #64748b;">Ingrese su clave de acceso autorizada para consultar los planes oficiales.</p>
+            <div class="input-group">
+                <label for="access-key">Clave de Acceso:</label>
+                <input type="text" id="access-key" placeholder="Ej. CARLOS2026 o clave de docente">
+                <div id="login-error" class="error-msg">Clave incorrecta o no autorizada.</div>
+            </div>
+            <button onclick="verificarAcceso()">Entrar al Sistema</button>
+        </div>
+
+        <!-- SECCIÓN DE LA APLICACIÓN -->
+        <div id="app-screen" class="card">
+            <h2 style="color: var(--primary); margin-top:0;">📚 Consulta de Planes Diarios</h2>
+            
+            <div class="input-group">
+                <label for="asignatura">Asignatura:</label>
+                <select id="asignatura" onchange="actualizarUnidades()">
+                    <option value="">Seleccione la asignatura...</option>
+                    <option value="matematica">Matemática</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="grado">Grado:</label>
+                <select id="grado">
+                    <option value="sexto">Sexto Grado (Asignación 2do Semestre)</option>
+                    <option value="quinto">Quinto Grado (Asignación 2do Semestre)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="unidad">Unidad y Contenido:</label>
+                <select id="unidad">
+                    <option value="volumen_prismas">Unidad 8: Volumen - Prismas y Cubos</option>
+                </select>
+            </div>
+
+            <button onclick="generarPlan()">Generar Plan Oficial</button>
+
+            <div id="resultado-container" style="display:none;">
+                <h3 style="margin-top: 20px; color: var(--primary);">Plan Diario y Formato Oficial:</h3>
+                <div id="plan-texto" class="plan-output"></div>
+                <button onclick="copiarPlan()" style="margin-top: 10px; background-color: #059669;">Copiar Plan al Portapapeles</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lista de claves permitidas (Tú puedes agregar más aquí cuando vendas accesos)
+        const clavesValidas = ["CARLOS2026", "PROFENICA", "DOCENTE01", "SEQUEIRA2026"];
+
+        function verificarAcceso() {
+            const inputKey = document.getElementById('access-key').value.trim();
+            const errorDiv = document.getElementById('login-error');
+
+            if (clavesValidas.includes(inputKey)) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('app-screen').style.display = 'block';
+            } else {
+                errorDiv.style.display = 'block';
+            }
+        }
+
+        function actualizarUnidades() {
+            // Espacio preparado para futuras asignaturas
+        }
+
+        function generarPlan() {
+            const planTexto = `Plan Diario Asignatura: Matemática
+Fecha: [Fecha del día]
+Tiempo: 2 horas clase
+Grado: Sexto Grado (Asignación 2do Semestre)
+Nombre y número de Unidad: Unidad 8: Volumen
+Indicador de logro: Emplea el cálculo del volumen del prisma rectangular, cubo y cuerpo geométrico compuesto por prismas y cubos en la solución de situaciones de la vida cotidiana.
+Criterios de evaluación:
+* Conceptual: Identifica fórmulas para calcular volumen de prismas y cubos.
+* Procedimental: Resuelve problemas aplicando el cálculo de volumen.
+* Actitudinal: Trabaja con orden y responsabilidad en operaciones matemáticas.
+
+Actividades de inicio: 
+- Saludo cordial y motivación inicial con una pregunta desafiante sobre el espacio que ocupan las cajas en nuestra vida diaria.
+- Recuperación de saberes previos mediante lluvia de ideas sobre figuras geométricas tridimensionales.
+
+Actividades de desarrollo: 
+- Presentación de los conceptos clave del volumen para prismas rectangulares y cubos.
+- Demostración práctica de la aplicación de las fórmulas de volumen en la pizarra con participación activa de los estudiantes.
+- Resolución guiada de ejercicios del libro de texto oficial del MINED adaptados al segundo semestre.
+
+Actividades de Culminación: 
+- Puesta en común de los resultados obtenidos por diferentes equipos de trabajo en la resolución de problemas prácticos.
+- Conclusión plenaria reforzando la importancia de la exactitud en las unidades de medida cúbicas.
+
+Actividades de evaluación: 
+- Evaluación formativa mediante observación directa del trabajo colaborativo y revisión de ejercicios resueltos en el cuaderno.
+
+Tarea: 
+- Resolver dos problemas adicionales de cálculo de volumen asignados en la guía metodológica del MINED.
+
+Adecuación curricular para niños con las dificultades: 
+- Brindar apoyo visual con cuerpos geométricos manipulables (modelos físicos) y permitir el uso de esquemas guiados paso a paso para el cálculo de fórmulas.`;
+
+            document.getElementById('plan-texto').innerText = planTexto;
+            document.getElementById('resultado-container').style.display = 'block';
+        }
+
+        function copiarPlan() {
+            const texto = document.getElementById('plan-texto').innerText;
+            navigator.clipboard.writeText(texto).then(() => {
+                alert("¡Plan copiado al portapapeles con éxito!");
+            });
+        }
+    </script>
+</body>
+</html>
