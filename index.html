@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planes de Clases - Carlos Sequeira 2026</title>
+    <title>Nica Planes 2026 - Carlos Sequeira</title>
     <style>
         :root {
             --primary: #1e3a8a;
@@ -111,19 +111,19 @@
 <body>
 
     <header>
-        <h1>Planes de Clases - Carlos Sequeira 2026</h1>
-        <p>Sistema Oficial de Gestión Pedagógica MINED</p>
+        <h1>Nica Planes 2026</h1>
+        <p>Sistema Oficial de Gestión Pedagógica - Profe. Carlos Sequeira</p>
     </header>
 
     <div class="container">
         <!-- SECCIÓN DE ACCESO -->
         <div id="login-screen" class="card">
             <h2>🔑 Acceso de Docentes</h2>
-            <p style="font-size: 0.9rem; color: #64748b;">Ingrese su clave de acceso autorizada para consultar los planes oficiales.</p>
+            <p style="font-size: 0.9rem; color: #64748b;">Ingrese su clave de acceso autorizada para consultar y generar los planes oficiales.</p>
             <div class="input-group">
                 <label for="access-key">Clave de Acceso:</label>
-                <input type="text" id="access-key" placeholder="Ej. CARLOS2026 o clave de docente">
-                <div id="login-error" class="error-msg">Clave incorrecta o no autorizada.</div>
+                <input type="password" id="access-key" placeholder="Ingrese su clave">
+                <div id="login-error" class="error-msg">Clave incorrecta o no autorizada. Verifique e intente de nuevo.</div>
             </div>
             <button onclick="verificarAcceso()">Entrar al Sistema</button>
         </div>
@@ -134,24 +134,23 @@
             
             <div class="input-group">
                 <label for="asignatura">Asignatura:</label>
-                <select id="asignatura" onchange="actualizarUnidades()">
-                    <option value="">Seleccione la asignatura...</option>
+                <select id="asignatura">
                     <option value="matematica">Matemática</option>
                 </select>
             </div>
 
             <div class="input-group">
                 <label for="grado">Grado:</label>
-                <select id="grado">
-                    <option value="sexto">Sexto Grado (Asignación 2do Semestre)</option>
-                    <option value="quinto">Quinto Grado (Asignación 2do Semestre)</option>
+                <select id="grado" onchange="actualizarUnidades()">
+                    <option value="sexto">6.° Grado (A, B, C)</option>
+                    <option value="quinto">5.° Grado (A, B)</option>
                 </select>
             </div>
 
             <div class="input-group">
                 <label for="unidad">Unidad y Contenido:</label>
                 <select id="unidad">
-                    <option value="volumen_prismas">Unidad 8: Volumen - Prismas y Cubos</option>
+                    <!-- Se llena dinámicamente -->
                 </select>
             </div>
 
@@ -166,7 +165,7 @@
     </div>
 
     <script>
-        // Lista de claves permitidas (Tú puedes agregar más aquí cuando vendas accesos)
+        // Claves permitidas para el acceso seguro
         const clavesValidas = ["CARLOS2026", "PROFENICA", "DOCENTE01", "SEQUEIRA2026"];
 
         function verificarAcceso() {
@@ -176,51 +175,121 @@
             if (clavesValidas.includes(inputKey)) {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('app-screen').style.display = 'block';
+                actualizarUnidades();
             } else {
                 errorDiv.style.display = 'block';
             }
         }
 
-        function actualizarUnidades() {
-            // Espacio preparado para futuras asignaturas
-        }
+        // Base de datos de planes oficiales extraídos de documentos del MINED
+        const baseDePlanes = {
+            sexto: [
+                {
+                    id: "volumen_compuestos",
+                    titulo: "Unidad 8: Volumen - C5: Volumen de cuerpos geométricos compuestos (LT pág. 88)",
+                    texto: `Plan de Clase de Matemática
+Asignatura: Matemática
+Grado: 6.° Grado A (8:00 a 8:45), 6.° Grado C (9:45 a 10:30) y 6.° Grado B (10:30 a 11:15)
+Fecha: Miércoles 29/07/2026
+Tiempo: 45'
+No. y Nombre de la Unidad: Unidad 8: Volumen
+Contenido: C5: Volumen de cuerpos geométricos compuestos por prismas y cubos (LT pág. 88)
+Indicador de Logro: Emplea el cálculo del volumen del prisma rectangular, cubo y cuerpos geométricos compuestos por prismas y cubos en la solución de situaciones de la vida cotidiana.
+Aprendizaje esperado: Aplica la fórmula para el cálculo de volumen de prismas rectangulares.
 
-        function generarPlan() {
-            const planTexto = `Plan Diario Asignatura: Matemática
-Fecha: [Fecha del día]
-Tiempo: 2 horas clase
-Grado: Sexto Grado (Asignación 2do Semestre)
-Nombre y número de Unidad: Unidad 8: Volumen
-Indicador de logro: Emplea el cálculo del volumen del prisma rectangular, cubo y cuerpo geométrico compuesto por prismas y cubos en la solución de situaciones de la vida cotidiana.
-Criterios de evaluación:
+Criterios de Evaluación:
 * Conceptual: Identifica fórmulas para calcular volumen de prismas y cubos.
 * Procedimental: Resuelve problemas aplicando el cálculo de volumen.
 * Actitudinal: Trabaja con orden y responsabilidad en operaciones matemáticas.
 
-Actividades de inicio: 
-- Saludo cordial y motivación inicial con una pregunta desafiante sobre el espacio que ocupan las cajas en nuestra vida diaria.
-- Recuperación de saberes previos mediante lluvia de ideas sobre figuras geométricas tridimensionales.
+P (Problema / Analiza):
+- Se muestra un sólido compuesto por dos prismas rectangulares (dimensiones de base y altura mostradas en el libro de texto).
 
-Actividades de desarrollo: 
-- Presentación de los conceptos clave del volumen para prismas rectangulares y cubos.
-- Demostración práctica de la aplicación de las fórmulas de volumen en la pizarra con participación activa de los estudiantes.
-- Resolución guiada de ejercicios del libro de texto oficial del MINED adaptados al segundo semestre.
+S (Soluciona):
+- Se puede calcular el volumen dividiendo el sólido en dos prismas independientes.
+- Prisma 1: Volumen = 10 x 4 x 8 = 320 cm³
+- Prisma 2: Volumen = 10 x 5 x 6 = 300 cm³ (o sumando/restando volúmenes de prismas según el desglose).
 
-Actividades de Culminación: 
-- Puesta en común de los resultados obtenidos por diferentes equipos de trabajo en la resolución de problemas prácticos.
-- Conclusión plenaria reforzando la importancia de la exactitud en las unidades de medida cúbicas.
+C (Comprende / Concepto):
+- Se puede calcular el volumen de sólidos compuestos sumando (o restando) volúmenes de prismas.
 
-Actividades de evaluación: 
-- Evaluación formativa mediante observación directa del trabajo colaborativo y revisión de ejercicios resueltos en el cuaderno.
+Ejercitación:
+- Resolución de ejercicios prácticos del libro de texto oficial del MINED adaptados al cálculo de sólidos compuestos.
 
-Tarea: 
-- Resolver dos problemas adicionales de cálculo de volumen asignados en la guía metodológica del MINED.
+Tarea:
+- Calcula el volumen del sólido propuesto en la guía (ejercicio con dimensiones 6cm, 3cm, 4cm, 2cm).`
+                }
+            ],
+            quinto: [
+                {
+                    id: "maximo_comun_divisor",
+                    titulo: "Unidad 8: Múltiplos y Divisores - S3C1: Máximo común divisor (LT pág. 90)",
+                    texto: `Plan de Clase de Matemática
+Asignatura: Matemática
+Grado: 5.° Grado A (7:15 a 8:00) y 5.° Grado B (8:45 a 9:30)
+Fecha: Miércoles 29/07/2026
+Tiempo: 45'
+No. y Nombre de la Unidad: Unidad 8: Múltiplos y Divisores
+Contenido: C2 / S3C1: Máximo común divisor (LT pág. 90)
+Indicador de Logro: Utiliza los divisores de un número natural, el máximo común divisor, los números primos y compuestos en la solución de situaciones de la vida cotidiana.
+Aprendizaje esperado: Encuentra los divisores comunes y el máximo común divisor.
 
-Adecuación curricular para niños con las dificultades: 
-- Brindar apoyo visual con cuerpos geométricos manipulables (modelos físicos) y permitir el uso de esquemas guiados paso a paso para el cálculo de fórmulas.`;
+Criterios de Evaluación:
+* Conceptual: Identifica el máximo común divisor entre números naturales.
+* Procedimental: Calcula el máximo común divisor utilizando procedimientos adecuados.
+* Actitudinal: Mantiene actitudes de respeto y cooperación durante las actividades de aprendizaje.
 
-            document.getElementById('plan-texto').innerText = planTexto;
-            document.getElementById('resultado-container').style.display = 'block';
+P (Problema / Analiza):
+A) Encuentra los divisores de 12 y 18.
+B) ¿Cuáles son los divisores comunes de 12 y 18?
+C) ¿Cuál es el mayor de los divisores comunes, o sea el máximo común divisor?
+
+S (Soluciona / Conceptualiza):
+a) Divisores de 12: 1, 2, 3, 4, 6, 12
+   Divisores de 18: 1, 2, 3, 6, 9, 18
+b) Divisores comunes de 12 y 18: 1, 2, 3 y 6. (Los divisores comunes de dos o más números naturales que coinciden se llaman divisores comunes).
+c) El máximo de los divisores comunes es 6. El divisor común más grande se llama máximo común divisor y se abrevia así: m.c.d. (Por ejemplo: m.c.d. de 12 y 18 es 6).
+
+Ejercitación:
+Encuentra el máximo común divisor (m.c.d.) de:
+a) 18 y 24 (m.c.d. = 6)
+b) 9 y 18 (m.c.d. = 9)
+c) 15 y 20 (m.c.d. = 5)
+d) 12 y 24 (m.c.d. = 12)
+e) 7 y 10 (m.c.d. = 1)
+
+Tarea:
+Encuentra el máximo común divisor de: 20 y 10.`
+                }
+            ]
+        };
+
+        function actualizarUnidades() {
+            const gradoSelect = document.getElementById('grado').value;
+            const unidadSelect = document.getElementById('unidad');
+            
+            unidadSelect.innerHTML = "";
+
+            const planesGrado = baseDePlanes[gradoSelect] || [];
+            planesGrado.forEach(plan => {
+                let opt = document.createElement('option');
+                opt.value = plan.id;
+                opt.textContent = plan.titulo;
+                unidadSelect.appendChild(opt);
+            });
+        }
+
+        function generarPlan() {
+            const gradoSelect = document.getElementById('grado').value;
+            const unidadSelect = document.getElementById('unidad').value;
+            
+            const planesGrado = baseDePlanes[gradoSelect] || [];
+            const planEncontrado = planesGrado.find(p => p.id === unidadSelect);
+
+            if (planEncontrado) {
+                document.getElementById('plan-texto').innerText = planEncontrado.texto;
+                document.getElementById('resultado-container').style.display = 'block';
+            }
         }
 
         function copiarPlan() {
