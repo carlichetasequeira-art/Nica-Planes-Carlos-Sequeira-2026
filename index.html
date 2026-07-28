@@ -90,10 +90,6 @@
             margin-top: 5px;
             display: none;
         }
-        /* Panel Principal */
-        #app-screen {
-            display: none;
-        }
         /* Estilo de Tabla Oficial de Plan */
         .plan-table {
             width: 100%;
@@ -115,6 +111,16 @@
         .cell-title {
             font-weight: bold;
             color: var(--primary);
+        }
+        .figure-box {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            padding: 10px;
+            text-align: center;
+            border-radius: 6px;
+            margin-top: 5px;
+            font-style: italic;
+            color: #475569;
         }
     </style>
 </head>
@@ -139,7 +145,7 @@
         </div>
 
         <!-- SECCIÓN DE LA APLICACIÓN -->
-        <div id="app-screen" class="card">
+        <div id="app-screen" class="card" style="display:none;">
             <h2 style="color: var(--primary); margin-top:0;">📚 Consulta de Planes Diarios</h2>
             
             <div class="input-group">
@@ -205,11 +211,11 @@
                     conceptual: "Identifica fórmulas para calcular volumen de prismas y cubos.",
                     procedimental: "Resuelve problemas aplicando el cálculo de volumen.",
                     actitudinal: "Trabaja con orden y responsabilidad en operaciones matemáticas.",
-                    p: "Se muestra un sólido compuesto por dos prismas rectangulares (dimensiones de base y altura mostradas en el libro de texto).",
-                    s: "Se puede calcular el volumen dividiendo el sólido en dos prismas independientes.\n- Prisma 1: 10 x 4 x 8 = 320 cm³\n- Prisma 2: 10 x 5 x 6 = 300 cm³",
+                    p: "Analiza el sólido compuesto:\n[Gráfico: Prisma rectangular base superior de 6 cm x 9 cm y altura 4 cm, montado sobre un prisma base inferior de 10 cm x 8 cm y altura de 8 cm].",
+                    s: "Se puede calcular el volumen dividiendo el sólido en dos prismas independientes:\n- Prisma Superior: 10cm (largo) x 4cm (alto) x 8cm (ancho) = 320 cm³\n- Prisma Inferior: 10cm x 5cm x 6cm = 300 cm³",
                     c: "Se puede calcular el volumen de sólidos compuestos sumando (o restando) volúmenes de prismas.",
                     ejercitacion: "Resolución de ejercicios prácticos del libro de texto oficial del MINED adaptados al cálculo de sólidos compuestos.",
-                    tarea: "Calcula el volumen del sólido propuesto en la guía (ejercicio con dimensiones 6cm, 3cm, 4cm, 2cm)."
+                    tarea: "Calcula el volumen del sólido compuesto propuesto en la guía (Prisma base con dimensiones 4cm, 2cm, 6cm, 3cm y cubos acoplados)."
                 }
             ],
             quinto: [
@@ -221,16 +227,16 @@
                     fecha: "Miércoles 29/07/2026",
                     tiempo: "45'",
                     unidad: "Unidad 8: Múltiplos y Divisores",
-                    contenido: "C2 / S3C1: Máximo común divisor (LT pág. 90)[span_1](start_span)[span_1](end_span)",
-                    indicador: "Utiliza los divisores de un número natural, el máximo común divisor, los números primos y compuestos en la solución de situaciones de la vida cotidiana[span_2](start_span)[span_2](end_span).",
-                    conceptual: "Identifica el máximo común divisor entre números naturales[span_3](start_span)[span_3](end_span).",
-                    procedimental: "Calcula el máximo común divisor utilizando procedimientos adecuados[span_4](start_span)[span_4](end_span).",
-                    actitudinal: "Mantiene actitudes de respeto y cooperación durante las actividades de aprendizaje[span_5](start_span)[span_5](end_span).",
+                    contenido: "C2 / S3C1: Máximo común divisor (LT pág. 90)[span_0](start_span)[span_0](end_span)",
+                    indicador: "Utiliza los divisores de un número natural, el máximo común divisor, los números primos y compuestos en la solución de situaciones de la vida cotidiana[span_1](start_span)[span_1](end_span).",
+                    conceptual: "Identifica el máximo común divisor entre números naturales[span_2](start_span)[span_2](end_span).",
+                    procedimental: "Calcula el máximo común divisor utilizando procedimientos adecuados[span_3](start_span)[span_3](end_span).",
+                    actitudinal: "Mantiene actitudes de respeto y cooperación durante las actividades de aprendizaje[span_4](start_span)[span_4](end_span).",
                     p: "A) Encuentra los divisores de 12 y 18.\nB) ¿Cuáles son los divisores comunes de 12 y 18?\nC) ¿Cuál es el mayor de los divisores comunes, o sea el máximo común divisor?",
-                    s: "a) Divisores de 12: 1, 2, 3, 4, 6, 12 \n   Divisores de 18: 1, 2, 3, 6, 9, 18[span_6](start_span)[span_6](end_span)\nb) Divisores comunes de 12 y 18: 1, 2, 3 y 6[span_7](start_span)[span_7](end_span).\nc) El máximo de los divisores comunes es 6 (m.c.d.)[span_8](start_span)[span_8](end_span).",
-                    c: "Los divisores comunes de dos o más números naturales que coinciden se llaman divisores comunes. El divisor común más grande se llama máximo común divisor (m.c.d.)[span_9](start_span)[span_9](end_span).",
-                    ejercitacion: "Encuentra el m.c.d. de:\na) 18 y 24 (6) | b) 9 y 18 (9) | c) 15 y 20 (5)[span_10](start_span)[span_10](end_span)",
-                    tarea: "Encuentra el máximo común divisor de: 20 y 10[span_11](start_span)[span_11](end_span)."
+                    s: "a) Divisores de 12: 1, 2, 3, 4, 6, 12 \n   Divisores de 18: 1, 2, 3, 6, 9, 18[span_5](start_span)[span_5](end_span)\nb) Divisores comunes de 12 y 18: 1, 2, 3 y 6[span_6](start_span)[span_6](end_span).\nc) El máximo de los divisores comunes es 6 (m.c.d.)[span_7](start_span)[span_7](end_span).",
+                    c: "Los divisores comunes de dos o más números naturales que coinciden se llaman divisores comunes. El divisor común más grande se llama máximo común divisor (m.c.d.)[span_8](start_span)[span_8](end_span).",
+                    ejercitacion: "Encuentra el m.c.d. de:\na) 18 y 24 (6) | b) 9 y 18 (9) | c) 15 y 20 (5)[span_9](start_span)[span_9](end_span)",
+                    tarea: "Encuentra el máximo común divisor de: 20 y 10[span_10](start_span)[span_10](end_span)."
                 }
             ]
         };
@@ -305,3 +311,4 @@
     </script>
 </body>
 </html>
+
