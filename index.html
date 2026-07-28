@@ -110,14 +110,6 @@
             font-weight: bold;
             color: var(--primary);
         }
-        .plan-image {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            margin-top: 8px;
-            display: block;
-        }
     </style>
 </head>
 <body>
@@ -147,31 +139,38 @@
             <div class="input-group">
                 <label for="asignatura">Asignatura:</label>
                 <select id="asignatura">
-                    <option value="matematica">Matemática</option>
+                    <option value="Lengua y Literatura">Lengua y Literatura</option>
+                    <option value="Ciencias Naturales">Ciencias Naturales</option>
+                    <option value="Ciencias Sociales">Ciencias Sociales</option>
+                    <option value="Taller de Arte y Cultura">Taller de Arte y Cultura</option>
+                    <option value="Aprender Emprender y Prosperar">Aprender Emprender y Prosperar</option>
+                    <option value="Derecho y Dignidad de la Mujer">Derecho y Dignidad de la Mujer</option>
+                    <option value="Creciendo en Valores">Creciendo en Valores</option>
+                    <option value="Educación Física">Educación Física</option>
                 </select>
             </div>
 
             <div class="input-group">
                 <label for="grado">Grado:</label>
-                <select id="grado" onchange="actualizarUnidades()">
-                    <option value="sexto">6.° Grado (A, B, C)</option>
-                    <option value="quinto">5.° Grado (A, B)</option>
+                <select id="grado">
+                    <option value="5to Grado">5.° Grado</option>
+                    <option value="6to Grado">6.° Grado</option>
                 </select>
             </div>
 
             <div class="input-group">
-                <label for="unidad">Unidad y Contenido:</label>
+                <label for="unidad">Tema / Contenido de Ejemplo:</label>
                 <select id="unidad">
-                    <!-- Se llena dinámicamente -->
+                    <option value="ejemplo_general">Plan Base Oficial de la Asignatura</option>
                 </select>
             </div>
 
-            <button onclick="generarPlan()">Generar Plan Oficial con Gráficos</button>
+            <button onclick="generarPlan()">Generar Plan Oficial en Tabla</button>
 
             <div id="resultado-container" style="display:none; margin-top: 20px;">
                 <h3 style="color: var(--primary);">Vista Formato Oficial:</h3>
                 <div id="plan-tabla-container"></div>
-                <button onclick="copiarTabla()" style="margin-top: 15px; background-color: #059669;">Copiar Texto del Formato</button>
+                <button onclick="copiarTabla()" style="margin-top: 15px; background-color: #059669;">Copiar Formato</button>
             </div>
         </div>
     </div>
@@ -186,130 +185,63 @@
             if (clavesValidas.includes(inputKey)) {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('app-screen').style.display = 'block';
-                actualizarUnidades();
             } else {
                 errorDiv.style.display = 'block';
             }
         }
 
-        const baseDePlanes = {
-            sexto: [
-                {
-                    id: "volumen_compuestos",
-                    titulo: "Unidad 8: Volumen - C5: Volumen de cuerpos compuestos (LT pág. 88)",
-                    asignatura: "Matemática",
-                    grado: "6.° Grado A (8:00-8:45), C (9:45-10:30) y B (10:30-11:15)",
-                    fecha: "Miércoles 29/07/2026",
-                    tiempo: "45'",
-                    unidad: "Unidad 8: Volumen",
-                    contenido: "C5: Volumen de cuerpos geométricos compuestos por prismas y cubos (LT pág. 88)",
-                    indicador: "Emplea el cálculo del volumen del prisma rectangular, cubo y cuerpos geométricos compuestos por prismas y cubos en la solución de situaciones de la vida cotidiana.",
-                    conceptual: "Identifica fórmulas para calcular volumen de prismas y cubos.",
-                    procedimental: "Resuelve problemas aplicando el cálculo de volumen.",
-                    actitudinal: "Trabaja con orden y responsabilidad en operaciones matemáticas.",
-                    pText: "Analiza el sólido compuesto de la figura:",
-                    // Aquí usamos una etiqueta de imagen que apunta directo al gráfico extraído de tu PDF (puedes alojar tu imagen en el repo o usar enlace directo)
-                    pImg: "https://raw.githubusercontent.com/carlichetasequeira-art/Nica-Planes-Carlos-Sequeira-2026/main/figura_volumen.png", 
-                    s: "Se puede calcular el volumen dividiendo el sólido en dos prismas independientes:\n- Prisma 1: 10 x 4 x 8 = 320 cm³\n- Prisma 2: 10 x 5 x 6 = 300 cm³",
-                    c: "Se puede calcular el volumen de sólidos compuestos sumando (o restando) volúmenes de prismas.",
-                    ejercitacion: "Resolución de ejercicios prácticos del libro de texto oficial del MINED.",
-                    tarea: "Calcula el volumen del siguiente sólido propuesto:"
-                }
-            ],
-            quinto: [
-                {
-                    id: "maximo_comun_divisor",
-                    titulo: "Unidad 8: Múltiplos y Divisores - S3C1: Máximo común divisor (LT pág. 90)",
-                    asignatura: "Matemática",
-                    grado: "5.° Grado A (7:15 a 8:00) y 5.° Grado B (8:45 a 9:30)",
-                    fecha: "Miércoles 29/07/2026",
-                    tiempo: "45'",
-                    unidad: "Unidad 8: Múltiplos y Divisores",
-                    contenido: "C2 / S3C1: Máximo común divisor (LT pág. 90)[span_0](start_span)[span_0](end_span)",
-                    indicador: "Utiliza los divisores de un número natural, el máximo común divisor, los números primos y compuestos en la solución de situaciones de la vida cotidiana[span_1](start_span)[span_1](end_span).",
-                    conceptual: "Identifica el máximo común divisor entre números naturales[span_2](start_span)[span_2](end_span).",
-                    procedimental: "Calcula el máximo común divisor utilizando procedimientos adecuados[span_3](start_span)[span_3](end_span).",
-                    actitudinal: "Mantiene actitudes de respeto y cooperación durante las actividades de aprendizaje[span_4](start_span)[span_4](end_span).",
-                    pText: "A) Encuentra los divisores de 12 y 18.\nB) ¿Cuáles son los divisores comunes de 12 y 18?\nC) ¿Cuál es el mayor de los divisores comunes, o sea el máximo común divisor?",
-                    pImg: "",
-                    s: "a) Divisores de 12: 1, 2, 3, 4, 6, 12 \n   Divisores de 18: 1, 2, 3, 6, 9, 18[span_5](start_span)[span_5](end_span)\nb) Divisores comunes de 12 y 18: 1, 2, 3 y 6[span_6](start_span)[span_6](end_span).\nc) El máximo de los divisores comunes es 6 (m.c.d.)[span_7](start_span)[span_7](end_span).",
-                    c: "Los divisores comunes de dos o más números naturales que coinciden se llaman divisores comunes. El divisor común más grande se llama máximo común divisor (m.c.d.)[span_8](start_span)[span_8](end_span).",
-                    ejercitacion: "Encuentra el m.c.d. de:\na) 18 y 24 (6) | b) 9 y 18 (9) | c) 15 y 20 (5)[span_9](start_span)[span_9](end_span)",
-                    tarea: "Encuentra el máximo común divisor de: 20 y 10[span_10](start_span)[span_10](end_span)."
-                }
-            ]
-        };
-
-        function actualizarUnidades() {
-            const gradoSelect = document.getElementById('grado').value;
-            const unidadSelect = document.getElementById('unidad');
-            unidadSelect.innerHTML = "";
-            const planesGrado = baseDePlanes[gradoSelect] || [];
-            planesGrado.forEach(plan => {
-                let opt = document.createElement('option');
-                opt.value = plan.id;
-                opt.textContent = plan.titulo;
-                unidadSelect.appendChild(opt);
-            });
-        }
-
         function generarPlan() {
-            const gradoSelect = document.getElementById('grado').value;
-            const unidadSelect = document.getElementById('unidad').value;
-            const planesGrado = baseDePlanes[gradoSelect] || [];
-            const p = planesGrado.find(item => item.id === unidadSelect);
+            const asignatura = document.getElementById('asignatura').value;
+            const grado = document.getElementById('grado').value;
+            const fechaActual = "Miércoles 29/07/2026";
 
-            if (p) {
-                let imagenHtml = p.pImg ? `<br><img src="${p.pImg}" alt="Figura geométrica" class="plan-image" onerror="this.style.display='none'">` : '';
+            const htmlTabla = `
+            <table class="plan-table">
+                <tr>
+                    <td colspan="2"><span class="cell-title">Asignatura:</span> ${asignatura}</td>
+                    <td><span class="cell-title">Grado:</span> ${grado}</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><span class="cell-title">Fecha:</span> ${fechaActual}</td>
+                    <td><span class="cell-title">Tiempo:</span> 45'</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><span class="cell-title">Unidad y Contenido:</span> Desarrollo curricular correspondiente a ${asignatura}</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><span class="cell-title">Indicador de Logro:</span> Aplica los conocimientos, conceptos y valores fundamentales de ${asignatura} en situaciones prácticas del entorno escolar y comunitario.</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <span class="cell-title">Criterios de Evaluación:</span><br>
+                        - <b>Conceptual:</b> Comprende los conceptos clave de la temática abordada.<br>
+                        - <b>Procedimental:</b> Ejecuta de forma correcta las actividades prácticas y analíticas.<br>
+                        - <b>Actitudinal:</b> Muestra interés, respeto y participación activa en clase.
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="cell-title">Actividades de Inicio:</span><br>- Dinámica de motivación y activación de conocimientos previos relacionados con ${asignatura}.</td>
+                    <td><span class="cell-title">Actividades de Desarrollo:</span><br>- Explicación del contenido central, análisis guiado y participación de los estudiantes.</td>
+                    <td><span class="cell-title">Actividades de Culminación:</span><br>- Plenaria, conclusiones y verificación de aprendizajes alcanzados.</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><span class="cell-title">Actividades de Evaluación:</span> Evaluación formativa mediante observación directa, participación y revisión de ejercicios en clase.</td>
+                </tr>
+                <tr>
+                    <td colspan="3"><span class="cell-title">Tarea:</span> Investigar o desarrollar una actividad práctica relacionada con el tema en casa.</td>
+                </tr>
+            </table>`;
 
-                const htmlTabla = `
-                <table class="plan-table">
-                    <tr>
-                        <td colspan="2"><span class="cell-title">Asignatura:</span> ${p.asignatura}</td>
-                        <td><span class="cell-title">Grado:</span> ${p.grado}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><span class="cell-title">Fecha:</span> ${p.fecha}</td>
-                        <td><span class="cell-title">Tiempo:</span> ${p.tiempo}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"><span class="cell-title">Unidad:</span> ${p.unidad} | <span class="cell-title">Contenido:</span> ${p.contenido}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"><span class="cell-title">Indicador de Logro:</span> ${p.indicador}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3">
-                            <span class="cell-title">Criterios de Evaluación:</span><br>
-                            - <b>Conceptual:</b> ${p.conceptual}<br>
-                            - <b>Procedimental:</b> ${p.procedimental}<br>
-                            - <b>Actitudinal:</b> ${p.actitudinal}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><span class="cell-title">P (Analiza / Problema):</span><br>${p.pText.replace(/\n/g, '<br>')}${imagenHtml}</td>
-                        <td><span class="cell-title">S (Soluciona):</span><br>${p.s.replace(/\n/g, '<br>')}</td>
-                        <td><span class="cell-title">C (Comprende):</span><br>${p.c.replace(/\n/g, '<br>')}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"><span class="cell-title">Ejercitación:</span><br>${p.ejercitacion.replace(/\n/g, '<br>')}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3"><span class="cell-title">Tarea:</span><br>${p.tarea}</td>
-                    </tr>
-                </table>`;
-                document.getElementById('plan-tabla-container').innerHTML = htmlTabla;
-                document.getElementById('resultado-container').style.display = 'block';
-            }
+            document.getElementById('plan-tabla-container').innerHTML = htmlTabla;
+            document.getElementById('resultado-container').style.display = 'block';
         }
 
         function copiarTabla() {
             const contenido = document.getElementById('plan-tabla-container').innerText;
             navigator.clipboard.writeText(contenido).then(() => {
-                alert("¡Texto del formato copiado al portapapeles!");
+                alert("¡Formato de tabla copiado al portapapeles!");
             });
         }
     </script>
 </body>
 </html>
-
